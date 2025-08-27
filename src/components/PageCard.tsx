@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 interface PageCardProps {
   id: string;
@@ -10,9 +9,10 @@ interface PageCardProps {
 
 const PageCard: React.FC<PageCardProps> = ({ id, title, description, path }) => {
   return (
-    <Link
-      to={path}
+    <a
+      href={path}
       className="group flex flex-col rounded-xl border border-white/10 bg-white/5 p-6 text-white transition-all duration-200 ease-in-out hover:-translate-y-1 hover:border-golden hover:shadow-2xl hover:shadow-golden/20"
+      data-testid={`card-${title.toLowerCase()}`}
     >
       <div className="mb-3 flex items-start justify-between">
         <h3 className="text-xl font-bold text-dark-text-primary">{title}</h3>
@@ -24,7 +24,7 @@ const PageCard: React.FC<PageCardProps> = ({ id, title, description, path }) => 
       <div className="mt-auto flex items-center justify-center rounded-lg bg-white/10 py-2 font-semibold text-dark-text-primary transition-colors group-hover:bg-golden group-hover:text-dark-bg-primary">
         Open <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
       </div>
-    </Link>
+    </a>
   );
 };
 
