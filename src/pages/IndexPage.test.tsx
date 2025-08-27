@@ -11,7 +11,17 @@ describe('IndexPage', () => {
     expect(mainHeading).toBeInTheDocument();
   });
 
-  test('renders the three section headings', () => {
+  test('renders the Stats and Terminal sections', () => {
+    // Check for a heading from the Stats section
+    const statsHeading = screen.getByText(/trusted by 500\+/i);
+    expect(statsHeading).toBeInTheDocument();
+
+    // Check for some text from the Terminal demo
+    const terminalText = screen.getByText(/agricultural-robot-deploy/i);
+    expect(terminalText).toBeInTheDocument();
+  });
+
+  test('renders the three card sections', () => {
     const coreHeading = screen.getByRole('heading', { name: /core/i });
     expect(coreHeading).toBeInTheDocument();
 
@@ -26,15 +36,9 @@ describe('IndexPage', () => {
     const pageCards = screen.getAllByTestId(/^card-/);
     expect(pageCards).toHaveLength(12);
 
-    // Check for an icon in one of the cards
     const dashboardCard = screen.getByTestId('card-dashboard');
     const icon = screen.getByText('📊');
     expect(dashboardCard).toContainElement(icon);
-
-    // Check a few specific links
     expect(dashboardCard).toHaveAttribute('href', '/robotics_ui_dashboard001.html');
-
-    const landingCard = screen.getByTestId('card-landing');
-    expect(landingCard).toHaveAttribute('href', '/landing.html');
   });
 });

@@ -1,5 +1,7 @@
 import React from 'react';
 import IndexSection from '../components/IndexSection';
+import StatsSection from '../components/StatsSection';
+import TerminalDemo from '../components/TerminalDemo';
 
 // Data for the cards, now with icons
 const corePages = [
@@ -31,7 +33,6 @@ const IndexPage: React.FC = () => {
         Skip to main content
       </a>
 
-      {/* Header based on landing.html */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-dark-bg-primary/80 backdrop-blur-lg border-b border-white/10 px-6">
         <nav className="flex items-center justify-between h-16 max-w-6xl mx-auto">
           <a href="/" className="flex items-center gap-3 text-xl font-bold text-dark-text-primary no-underline">
@@ -53,7 +54,6 @@ const IndexPage: React.FC = () => {
       </header>
 
       <main id="main-content" className="pt-16">
-        {/* Hero Welcome Section */}
         <section className="text-center py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-dark-bg-primary via-dark-bg-primary to-transparent z-0"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center_top,_rgba(255,184,0,0.1)_0%,_transparent_50%)] z-0"></div>
@@ -67,15 +67,18 @@ const IndexPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Main content with cards */}
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="px-4 sm:px-6 lg:px-8">
+            <TerminalDemo />
+            <StatsSection />
+        </div>
+
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-20 pt-20">
             <IndexSection title="Core" cards={corePages} />
             <IndexSection title="Advanced" cards={advancedPages} />
             <IndexSection title="Management" cards={managementPages} />
         </div>
       </main>
 
-      {/* Footer based on landing.html */}
       <footer className="py-12 px-4 border-t border-white/10">
         <div className="max-w-6xl mx-auto text-center text-dark-text-secondary text-sm">
           <p>&copy; 2025 VIAHUB.DEV. Empowering agricultural innovation through robotics.</p>
