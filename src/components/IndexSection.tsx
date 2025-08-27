@@ -6,6 +6,7 @@ interface CardData {
   title: string;
   description: string;
   path: string;
+  icon: string;
 }
 
 interface IndexSectionProps {
