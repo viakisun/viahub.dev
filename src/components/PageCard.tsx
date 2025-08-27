@@ -5,17 +5,21 @@ interface PageCardProps {
   title: string;
   description: string;
   path: string;
+  icon: string;
 }
 
-const PageCard: React.FC<PageCardProps> = ({ id, title, description, path }) => {
+const PageCard: React.FC<PageCardProps> = ({ id, title, description, path, icon }) => {
   return (
     <a
       href={path}
       className="group flex flex-col rounded-xl border border-white/10 bg-white/5 p-6 text-white transition-all duration-200 ease-in-out hover:-translate-y-1 hover:border-golden hover:shadow-2xl hover:shadow-golden/20"
       data-testid={`card-${title.toLowerCase()}`}
     >
-      <div className="mb-3 flex items-start justify-between">
-        <h3 className="text-xl font-bold text-dark-text-primary">{title}</h3>
+      <div className="mb-4 flex items-start justify-between">
+        <div className="flex items-center gap-4">
+          <span className="text-2xl">{icon}</span>
+          <h3 className="text-xl font-bold text-dark-text-primary">{title}</h3>
+        </div>
         <span className="ml-4 whitespace-nowrap rounded-md bg-white/10 px-2 py-1 font-mono text-xs text-dark-text-secondary">
           {id}
         </span>
