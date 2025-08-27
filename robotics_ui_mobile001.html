@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Dashboard - VIAHUB.DEV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Theme Colors */
+            --bg-primary: #0D1117;
+            --bg-secondary: #161B22;
+            --bg-tertiary: #21262D;
+            --bg-quaternary: #30363D;
+            
+            /* Text Colors */
+            --text-primary: #F0F6FC;
+            --text-secondary: #7D8590;
+            --text-tertiary: #484F58;
+            
+            /* Brand Colors - Agricultural tech inspired */
+            --primary-400: #FFB800;
+            --primary-500: #FF8F00;
+            --primary-600: #E65100;
+            --accent-400: #00BCD4;
+            --accent-500: #0097A7;
+            
+            /* Status Colors */
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+            --info: #2196F3;
+            
+            /* Fonts */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Mobile Container */
+        .mobile-container {
+            max-width: 414px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+            align-items: end;
+        }
+
+        .bar {
+            width: 3px;
+            background: var(--text-primary);
+            border-radius: 1px;
+        }
+        .bar:nth-child(1) { height: 4px; }
+        .bar:nth-child(2) { height: 6px; }
+        .bar:nth-child(3) { height: 8px; }
+        .bar:nth-child(4) { height: 10px; }
+
+        .battery {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .battery-icon {
+            width: 24px;
+            height: 12px;
+            border: 1.5px solid var(--text-primary);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .battery-icon::after {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 3px;
+            width: 2px;
+            height: 6px;
+            background: var(--text-primary);
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery-fill {
+            height: 100%;
+            width: 85%;
+            background: var(--success);
+            border-radius: 1px;
+        }
+
+        /* Header */
+        .mobile-header {
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .logo-mobile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-icon-mobile {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .notifications-btn {
+            position: relative;
+            background: var(--bg-tertiary);
+            border: none;
+            color: var(--text-primary);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--error);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .farm-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .farm-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        /* Stats Cards */
+        .stats-section {
+            padding: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-change {
+            font-size: 11px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--error);
+        }
+
+        /* Robot Status */
+        .robots-section {
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .view-all {
+            color: var(--accent-400);
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .robot-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .robot-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .robot-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .robot-harvester {
+            background: linear-gradient(135deg, var(--success), #2E7D32);
+        }
+
+        .robot-monitor {
+            background: linear-gradient(135deg, var(--info), #1565C0);
+        }
+
+        .robot-navigator {
+            background: linear-gradient(135deg, var(--warning), #EF6C00);
+        }
+
+        .robot-info {
+            flex: 1;
+        }
+
+        .robot-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .robot-status {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .robot-battery {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .battery-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .battery-fill-robot {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .battery-high { background: var(--success); }
+        .battery-medium { background: var(--warning); }
+        .battery-low { background: var(--error); }
+
+        .battery-text {
+            font-size: 12px;
+            font-weight: 500;
+            min-width: 32px;
+        }
+
+        .robot-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:active {
+            background: var(--bg-quaternary);
+            transform: scale(0.95);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .quick-action {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-action:active {
+            transform: scale(0.98);
+            background: var(--bg-tertiary);
+        }
+
+        .quick-action-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .quick-action-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Emergency Button */
+        .emergency-section {
+            padding: 0 20px 20px;
+        }
+
+        .emergency-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--error), #C62828);
+            border: none;
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .emergency-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--bg-tertiary);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary-500);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-card, .robot-card, .quick-action {
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .robot-card:nth-child(1) { animation-delay: 0.5s; }
+        .robot-card:nth-child(2) { animation-delay: 0.6s; }
+        .robot-card:nth-child(3) { animation-delay: 0.7s; }
+
+        /* Responsive adjustments */
+        @media (max-width: 375px) {
+            .mobile-container {
+                max-width: 375px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        /* Add some mobile-specific interactions */
+        .touchable {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <div class="signal-bars">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <span>📶</span>
+                <span>📶</span>
+                <div class="battery">
+                    <div class="battery-icon">
+                        <div class="battery-fill"></div>
+                    </div>
+                    <span>85%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="mobile-header">
+            <div class="header-top">
+                <div class="logo-mobile">
+                    <div class="logo-icon-mobile">🚜</div>
+                    <span>VIAHUB</span>
+                </div>
+                <button class="notifications-btn touchable">
+                    🔔
+                    <div class="notification-badge">3</div>
+                </button>
+            </div>
+            <div class="farm-info">
+                <div class="farm-status"></div>
+                <span>🌾 Strawberry Farm Alpha</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="stats-section">
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card touchable">
+                    <div class="stat-icon">🤖</div>
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Active Robots</div>
+                    <div class="stat-change positive">+1 today</div>
+                </div>
+                
+                <div class="stat-card touchable">
+                    <div class="stat-icon">🍓</div>
+                    <div class="stat-value">847</div>
+                    <div class="stat-label">Fruits Today</div>
+                    <div class="stat-change positive">+127 vs yesterday</div>
+                </div>
+                
+                <div class="stat-card touchable">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value">87%</div>
+                    <div class="stat-label">Avg Battery</div>
+                    <div class="stat-change negative">-5% since morning</div>
+                </div>
+                
+                <div class="stat-card touchable">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value">98.1%</div>
+                    <div class="stat-label">System Health</div>
+                    <div class="stat-change positive">+0.3% this week</div>
+                </div>
+            </div>
+
+            <!-- Robot Status -->
+            <div class="robots-section">
+                <div class="section-header">
+                    <h3 class="section-title">Robot Status</h3>
+                    <a href="#" class="view-all">View all</a>
+                </div>
+                
+                <div class="robot-list">
+                    <div class="robot-card touchable">
+                        <div class="robot-avatar robot-harvester">🍓</div>
+                        <div class="robot-info">
+                            <div class="robot-name">Robot-Harvester-01</div>
+                            <div class="robot-status">Fruit Thinning • Sector A-1</div>
+                            <div class="robot-battery">
+                                <div class="battery-bar">
+                                    <div class="battery-fill-robot battery-high" style="width: 89%"></div>
+                                </div>
+                                <span class="battery-text">89%</span>
+                            </div>
+                        </div>
+                        <div class="robot-actions">
+                            <button class="action-btn touchable">📱</button>
+                            <button class="action-btn touchable">📊</button>
+                        </div>
+                    </div>
+
+                    <div class="robot-card touchable">
+                        <div class="robot-avatar robot-monitor">📊</div>
+                        <div class="robot-info">
+                            <div class="robot-name">Robot-Monitor-01</div>
+                            <div class="robot-status">Health Scanning • Sector B-2</div>
+                            <div class="robot-battery">
+                                <div class="battery-bar">
+                                    <div class="battery-fill-robot battery-high" style="width: 78%"></div>
+                                </div>
+                                <span class="battery-text">78%</span>
+                            </div>
+                        </div>
+                        <div class="robot-actions">
+                            <button class="action-btn touchable">📱</button>
+                            <button class="action-btn touchable">📊</button>
+                        </div>
+                    </div>
+
+                    <div class="robot-card touchable">
+                        <div class="robot-avatar robot-navigator">🚜</div>
+                        <div class="robot-info">
+                            <div class="robot-name">Robot-Navigator-01</div>
+                            <div class="robot-status">⚠️ Connection Lost • 12m ago</div>
+                            <div class="robot-battery">
+                                <div class="battery-bar">
+                                    <div class="battery-fill-robot battery-medium" style="width: 34%"></div>
+                                </div>
+                                <span class="battery-text">34%</span>
+                            </div>
+                        </div>
+                        <div class="robot-actions">
+                            <button class="action-btn touchable" style="background: var(--error); color: white;">🔧</button>
+                            <button class="action-btn touchable">📊</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section-header">
+                <h3 class="section-title">Quick Actions</h3>
+            </div>
+            
+            <div class="quick-actions">
+                <div class="quick-action touchable">
+                    <div class="quick-action-icon">🚀</div>
+                    <div class="quick-action-label">Deploy Update</div>
+                </div>
+                
+                <div class="quick-action touchable">
+                    <div class="quick-action-icon">🗺️</div>
+                    <div class="quick-action-label">View Map</div>
+                </div>
+                
+                <div class="quick-action touchable">
+                    <div class="quick-action-icon">⚙️</div>
+                    <div class="quick-action-label">Settings</div>
+                </div>
+                
+                <div class="quick-action touchable">
+                    <div class="quick-action-icon">📈</div>
+                    <div class="quick-action-label">Analytics</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Section -->
+        <div class="emergency-section">
+            <button class="emergency-btn touchable">
+                🚨
+                <span>EMERGENCY STOP ALL ROBOTS</span>
+            </button>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active touchable">
+                <div class="nav-icon">🏠</div>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item touchable">
+                <div class="nav-icon">🤖</div>
+                <span>Robots</span>
+            </a>
+            <a href="#" class="nav-item touchable">
+                <div class="nav-icon">📊</div>
+                <span>Analytics</span>
+            </a>
+            <a href="#" class="nav-item touchable">
+                <div class="nav-icon">⚙️</div>
+                <span>Settings</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update time every minute
+            function updateTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour12: false, 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                document.querySelector('.status-left span').textContent = timeString;
+            }
+            
+            setInterval(updateTime, 60000);
+            
+            // Add touch feedback to all touchable elements
+            document.querySelectorAll('.touchable').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                    this.style.transition = 'transform 0.1s ease';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Simulate real-time robot data updates
+            setInterval(() => {
+                // Update fruit count
+                const fruitCount = document.querySelector('.stat-card:nth-child(2) .stat-value');
+                const currentCount = parseInt(fruitCount.textContent);
+                if (Math.random() > 0.7) {
+                    fruitCount.textContent = currentCount + Math.floor(Math.random() * 3);
+                }
+                
+                // Update battery levels slightly
+                const batteryBars = document.querySelectorAll('.battery-fill-robot');
+                batteryBars.forEach(bar => {
+                    const currentWidth = parseInt(bar.style.width);
+                    const change = Math.random() > 0.5 ? 1 : -1;
+                    const newWidth = Math.max(10, Math.min(100, currentWidth + change));
+                    bar.style.width = newWidth + '%';
+                    
+                    // Update text
+                    const text = bar.parentElement.nextElementSibling;
+                    text.textContent = newWidth + '%';
+                    
+                    // Update color based on level
+                    if (newWidth > 60) {
+                        bar.className = 'battery-fill-robot battery-high';
+                    } else if (newWidth > 30) {
+                        bar.className = 'battery-fill-robot battery-medium';
+                    } else {
+                        bar.className = 'battery-fill-robot battery-low';
+                    }
+                });
+            }, 5000);
+            
+            // Emergency button confirmation
+            document.querySelector('.emergency-btn').addEventListener('click', function() {
+                if (confirm('⚠️ Are you sure you want to emergency stop all robots?\n\nThis will immediately halt all robotic operations in the farm.')) {
+                    alert('🚨 EMERGENCY STOP ACTIVATED\n\nAll robots have been safely stopped.\nCheck individual robot status for details.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

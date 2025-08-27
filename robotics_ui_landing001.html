@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIAHUB.DEV - Agricultural Robot Development Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Theme Colors */
+            --bg-primary: #0D1117;
+            --bg-secondary: #161B22;
+            --bg-tertiary: #21262D;
+            --bg-quaternary: #30363D;
+            
+            /* Text Colors */
+            --text-primary: #F0F6FC;
+            --text-secondary: #7D8590;
+            --text-tertiary: #484F58;
+            
+            /* Brand Colors - Agricultural tech inspired */
+            --primary-400: #FFB800;    /* Golden yellow - wheat/grain */
+            --primary-500: #FF8F00;    /* Deeper golden */
+            --primary-600: #E65100;    /* Orange accent */
+            --accent-400: #00BCD4;     /* Cyan - water/irrigation */
+            --accent-500: #0097A7;     /* Deeper cyan */
+            
+            /* Status Colors */
+            --success: #4CAF50;        /* Natural green but not overpowering */
+            --warning: #FF9800;
+            --error: #F44336;
+            --info: #2196F3;
+            
+            /* Fonts */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--bg-tertiary);
+            z-index: 1000;
+            padding: 0 24px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-400) 0%, var(--accent-400) 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--bg-primary);
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-400) 0%, var(--primary-500) 100%);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(255, 184, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--bg-quaternary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-quaternary);
+        }
+
+        /* Main Content */
+        .main {
+            margin-top: 64px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 24px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 400px;
+            background: radial-gradient(circle at center top, rgba(255, 184, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--bg-quaternary);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-400) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.4;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 64px;
+        }
+
+        .btn-large {
+            padding: 14px 24px;
+            font-size: 16px;
+        }
+
+        /* Live Terminal Demo */
+        .terminal-demo {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            margin: 0 auto;
+            max-width: 800px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .terminal-header {
+            background: var(--bg-tertiary);
+            border-radius: 12px 12px 0 0;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--bg-quaternary);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: var(--error); }
+        .dot-yellow { background: var(--warning); }
+        .dot-green { background: var(--success); }
+
+        .terminal-title {
+            margin-left: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .terminal-content {
+            padding: 20px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 300px;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: typeIn 0.5s forwards;
+        }
+
+        .terminal-prompt {
+            color: var(--primary-400);
+        }
+
+        .terminal-command {
+            color: var(--text-primary);
+        }
+
+        .terminal-success {
+            color: var(--success);
+        }
+
+        .terminal-info {
+            color: var(--accent-400);
+        }
+
+        .terminal-progress {
+            color: var(--primary-400);
+        }
+
+        .progress-bar {
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes typeIn {
+            to { opacity: 1; }
+        }
+
+        .terminal-line:nth-child(1) { animation-delay: 0.5s; }
+        .terminal-line:nth-child(2) { animation-delay: 1.5s; }
+        .terminal-line:nth-child(3) { animation-delay: 2.5s; }
+        .terminal-line:nth-child(4) { animation-delay: 3.5s; }
+        .terminal-line:nth-child(5) { animation-delay: 4.5s; }
+        .terminal-line:nth-child(6) { animation-delay: 5.5s; }
+        .terminal-line:nth-child(7) { animation-delay: 6.5s; }
+        .terminal-line:nth-child(8) { animation-delay: 7.5s; }
+        .terminal-line:nth-child(9) { animation-delay: 8.5s; }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .stats-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats-title {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 24px;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .features-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .features-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary-400);
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* SDK Section */
+        .sdk-section {
+            padding: 80px 24px;
+            background: var(--bg-secondary);
+        }
+
+        .sdk-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sdk-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .sdk-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .sdk-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .sdk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .sdk-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .sdk-item:hover {
+            border-color: var(--accent-400);
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.2);
+        }
+
+        .sdk-item-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .sdk-item-icon {
+            font-size: 24px;
+        }
+
+        .sdk-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .sdk-item-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 120px 24px;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .cta-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 48px 24px;
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .terminal-content {
+                font-size: 12px;
+                padding: 16px;
+            }
+
+            .features-title, .sdk-title, .cta-title {
+                font-size: 36px;
+            }
+
+            .sdk-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">
+                <div class="logo-icon">V</div>
+                VIAHUB.DEV
+            </a>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-link">SDKs</a>
+                <a href="#" class="nav-link">Docs</a>
+                <a href="#" class="nav-link">Pricing</a>
+                <a href="#" class="nav-link">Community</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="#" class="btn btn-secondary">Sign in</a>
+                <a href="#" class="btn btn-primary">🚀 Start Building</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>🌾</span>
+                    Complete Agricultural Robot Development Platform
+                </div>
+                
+                <h1 class="hero-title">
+                    Build Smart Farming Robots
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Complete SDK suite for fruit thinning, crop monitoring, and precision agriculture.<br>
+                    From computer vision to deployment - everything in one platform.
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-primary btn-large">🚜 Start Building</a>
+                    <a href="#" class="btn btn-secondary btn-large">📖 View SDKs</a>
+                </div>
+                
+                <!-- Live Terminal Demo -->
+                <div class="terminal-demo">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-red"></div>
+                        <div class="terminal-dot dot-yellow"></div>
+                        <div class="terminal-dot dot-green"></div>
+                        <span class="terminal-title">agricultural-robot-deploy</span>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span> 
+                            <span class="terminal-command">via deploy --target strawberry-farm</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-success">✅ Fruit detection model loaded (97.3% accuracy)</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-info">🤖 Deploying to 8 agricultural robots...</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-progress">
+                                <span class="progress-bar">████████████████████</span> 100% complete
+                            </span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-success">🍓 Robot-Harvester-01: Ready for thinning</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-success">🍓 Robot-Harvester-02: Navigation calibrated</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-success">🍓 Robot-Harvester-03: Vision system active</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-info">🔄 Starting precision thinning operation...</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-success">✨ All robots operational. Farm productivity optimized.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="stats-container">
+                <h2 class="stats-title">🌾 Trusted by 500+ Agricultural Technology Companies</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">2.5K+</div>
+                        <div class="stat-label">Farm Robots Deployed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">45M</div>
+                        <div class="stat-label">Fruits Processed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.2%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">35%</div>
+                        <div class="stat-label">Yield Improvement</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SDK Section -->
+        <section class="sdk-section">
+            <div class="sdk-container">
+                <div class="sdk-header">
+                    <h2 class="sdk-title">Complete Agricultural Robot SDK Suite</h2>
+                    <p class="sdk-subtitle">Everything you need for fruit thinning and precision agriculture</p>
+                </div>
+                
+                <div class="sdk-grid">
+                    <div class="sdk-item">
+                        <div class="sdk-item-header">
+                            <span class="sdk-item-icon">👁️</span>
+                            <span class="sdk-item-name">Computer Vision SDK</span>
+                        </div>
+                        <p class="sdk-item-description">
+                            Fruit detection, ripeness analysis, disease identification with 99%+ accuracy
+                        </p>
+                    </div>
+                    
+                    <div class="sdk-item">
+                        <div class="sdk-item-header">
+                            <span class="sdk-item-icon">🤖</span>
+                            <span class="sdk-item-name">Manipulation SDK</span>
+                        </div>
+                        <p class="sdk-item-description">
+                            Precise robotic arm control for delicate fruit handling and thinning operations
+                        </p>
+                    </div>
+                    
+                    <div class="sdk-item">
+                        <div class="sdk-item-header">
+                            <span class="sdk-item-icon">🗺️</span>
+                            <span class="sdk-item-name">Navigation SDK</span>
+                        </div>
+                        <p class="sdk-item-description">
+                            GPS-RTK, SLAM, and crop row navigation for autonomous field operation
+                        </p>
+                    </div>
+                    
+                    <div class="sdk-item">
+                        <div class="sdk-item-header">
+                            <span class="sdk-item-icon">🧠</span>
+                            <span class="sdk-item-name">AI Decision Engine</span>
+                        </div>
+                        <p class="sdk-item-description">
+                            Smart thinning decisions based on fruit density, growth patterns, and yield optimization
+                        </p>
+                    </div>
+                    
+                    <div class="sdk-item">
+                        <div class="sdk-item-header">
+                            <span class="sdk-item-icon">📡</span>
+                            <span class="sdk-item-name">IoT Connectivity</span>
+                        </div>
+                        <p class="sdk-item-description">
+                            Real-time data streaming, fleet management, and cloud integration
+                        </p>
+                    </div>
+                    
+                    <div class="sdk-item">
+                        <div class="sdk-item-header">
+                            <span class="sdk-item-icon">⚙️</span>
+                            <span class="sdk-item-name">Control Systems</span>
+                        </div>
+                        <p class="sdk-item-description">
+                            Motor controllers, sensor integration, and safety systems for farm robots
+                        </p>
+                    </div>
+                    
+                    <div class="sdk-item">
+                        <div class="sdk-item-header">
+                            <span class="sdk-item-icon">📊</span>
+                            <span class="sdk-item-name">Analytics SDK</span>
+                        </div>
+                        <p class="sdk-item-description">
+                            Crop health monitoring, yield prediction, and performance optimization
+                        </p>
+                    </div>
+                    
+                    <div class="sdk-item">
+                        <div class="sdk-item-header">
+                            <span class="sdk-item-icon">🔒</span>
+                            <span class="sdk-item-name">Security Framework</span>
+                        </div>
+                        <p class="sdk-item-description">
+                            End-to-end encryption, secure OTA updates, and farm data protection
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="features-container">
+                <div class="features-header">
+                    <h2 class="features-title">Build, Deploy, Scale</h2>
+                    <p class="features-subtitle">From prototype to production-ready agricultural robots</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🍓</div>
+                        <h3 class="feature-title">Fruit Thinning Expertise</h3>
+                        <p class="feature-description">
+                            Pre-trained models for apple, pear, peach, and strawberry thinning. 
+                            Optimized algorithms for maximum yield and fruit quality.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🚜</div>
+                        <h3 class="feature-title">Field-Ready Deployment</h3>
+                        <p class="feature-description">
+                            Rugged, weather-resistant solutions tested in real farm conditions. 
+                            Easy integration with existing agricultural equipment.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3 class="feature-title">Precision Agriculture</h3>
+                        <p class="feature-description">
+                            Data-driven insights for optimal crop management. 
+                            Reduce labor costs by up to 70% while improving harvest quality.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h3 class="feature-title">Developer-First Platform</h3>
+                        <p class="feature-description">
+                            ROS2 native, extensive APIs, simulation tools, and comprehensive documentation. 
+                            Build faster with our proven SDK components.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3 class="feature-title">Cloud-Edge Hybrid</h3>
+                        <p class="feature-description">
+                            Real-time processing on device, cloud analytics, and fleet management. 
+                            Works in remote areas with limited connectivity.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <h3 class="feature-title">Expert Support</h3>
+                        <p class="feature-description">
+                            Agricultural robotics engineers, agronomists, and technical support. 
+                            From proof-of-concept to commercial deployment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="cta-container">
+                <h2 class="cta-title">Ready to revolutionize agriculture?</h2>
+                <p class="cta-subtitle">Join leading agtech companies building the future of farming</p>
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-primary btn-large">🚜 Start Building</a>
+                    <a href="#" class="btn btn-secondary btn-large">📞 Book Demo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-text">© 2024 VIAHUB.DEV. Empowering agricultural innovation through robotics.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - VIAHUB.DEV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Theme Colors */
+            --bg-primary: #0D1117;
+            --bg-secondary: #161B22;
+            --bg-tertiary: #21262D;
+            --bg-quaternary: #30363D;
+            
+            /* Text Colors */
+            --text-primary: #F0F6FC;
+            --text-secondary: #7D8590;
+            --text-tertiary: #484F58;
+            
+            /* Brand Colors - Agricultural tech inspired */
+            --primary-400: #FFB800;
+            --primary-500: #FF8F00;
+            --primary-600: #E65100;
+            --accent-400: #00BCD4;
+            --accent-500: #0097A7;
+            
+            /* Status Colors */
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+            --info: #2196F3;
+            
+            /* Fonts */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--bg-tertiary);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-tab {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--primary-500);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 320px;
+            padding: 10px 16px 10px 40px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--bg-quaternary);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--bg-quaternary);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--bg-quaternary);
+            border-color: var(--text-tertiary);
+        }
+
+        .btn-primary {
+            background: var(--primary-500);
+            border-color: var(--primary-600);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-400);
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary-400), var(--accent-400));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            font-size: 14px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Categories */
+        .categories-section {
+            margin-bottom: 48px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .category-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary-500);
+            transform: translateY(-4px);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-400), var(--accent-400));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: var(--bg-tertiary);
+        }
+
+        .category-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .category-count {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .category-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Featured Items */
+        .featured-section {
+            margin-bottom: 48px;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .item-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .item-card:hover {
+            border-color: var(--bg-quaternary);
+            transform: translateY(-2px);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-quaternary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+        }
+
+        .item-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--primary-500);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .item-content {
+            padding: 20px;
+        }
+
+        .item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .item-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .item-author {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .item-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-400);
+        }
+
+        .item-price.free {
+            color: var(--success);
+        }
+
+        .item-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .item-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .item-stats {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        /* Popular This Week */
+        .popular-section {
+            margin-bottom: 48px;
+        }
+
+        .popular-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .popular-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .popular-item:hover {
+            border-color: var(--bg-quaternary);
+            background: var(--bg-tertiary);
+        }
+
+        .popular-rank {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-400);
+            min-width: 32px;
+        }
+
+        .popular-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .popular-info {
+            flex: 1;
+        }
+
+        .popular-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .popular-meta {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .popular-stats {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .nav-tabs {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-input {
+                width: 240px;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">🚜</div>
+                    <span>VIAHUB.DEV</span>
+                </div>
+                <nav class="nav-tabs">
+                    <a href="#" class="nav-tab">🏠 Dashboard</a>
+                    <a href="#" class="nav-tab">📁 Repositories</a>
+                    <a href="#" class="nav-tab active">🛒 Marketplace</a>
+                    <a href="#" class="nav-tab">👥 Community</a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search AI models, ROS2 packages, templates...">
+                </div>
+                <button class="btn btn-primary">📦 Publish Package</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">🛒 Robotics Marketplace</h1>
+            <p class="hero-subtitle">
+                Discover, share, and deploy cutting-edge agricultural robotics solutions. 
+                From AI models to complete robot templates - everything you need in one place.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">2,847</span>
+                    <span class="stat-label">Packages</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1,293</span>
+                    <span class="stat-label">AI Models</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">456</span>
+                    <span class="stat-label">Robot Templates</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15.2M</span>
+                    <span class="stat-label">Downloads</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories-section">
+            <div class="section-header">
+                <h2 class="section-title">Browse Categories</h2>
+                <a href="#" class="btn">View All</a>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🧠</div>
+                        <div class="category-info">
+                            <h3>AI Vision Models</h3>
+                            <div class="category-count">847 packages</div>
+                        </div>
+                    </div>
+                    <p class="category-description">
+                        Pre-trained computer vision models for fruit detection, ripeness assessment, disease identification, and quality grading.
+                    </p>
+                    <div class="category-tags">
+                        <span class="tag">YOLO</span>
+                        <span class="tag">TensorFlow</span>
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">OpenCV</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">📦</div>
+                        <div class="category-info">
+                            <h3>ROS2 Packages</h3>
+                            <div class="category-count">1,234 packages</div>
+                        </div>
+                    </div>
+                    <p class="category-description">
+                        Complete ROS2 packages for navigation, manipulation, sensor fusion, and agricultural-specific robot behaviors.
+                    </p>
+                    <div class="category-tags">
+                        <span class="tag">Navigation</span>
+                        <span class="tag">Manipulation</span>
+                        <span class="tag">Sensors</span>
+                        <span class="tag">SLAM</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🤖</div>
+                        <div class="category-info">
+                            <h3>Robot Templates</h3>
+                            <div class="category-count">156 templates</div>
+                        </div>
+                    </div>
+                    <p class="category-description">
+                        Complete robot configurations for strawberry harvesting, precision spraying, soil monitoring, and crop inspection.
+                    </p>
+                    <div class="category-tags">
+                        <span class="tag">Harvesting</span>
+                        <span class="tag">Spraying</span>
+                        <span class="tag">Monitoring</span>
+                        <span class="tag">Inspection</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🔧</div>
+                        <div class="category-info">
+                            <h3>Development Tools</h3>
+                            <div class="category-count">298 packages</div>
+                        </div>
+                    </div>
+                    <p class="category-description">
+                        Simulation environments, testing frameworks, deployment tools, and debugging utilities for robot development.
+                    </p>
+                    <div class="category-tags">
+                        <span class="tag">Gazebo</span>
+                        <span class="tag">Testing</span>
+                        <span class="tag">Deployment</span>
+                        <span class="tag">Debug</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">📊</div>
+                        <div class="category-info">
+                            <h3>Data & Analytics</h3>
+                            <div class="category-count">312 packages</div>
+                        </div>
+                    </div>
+                    <p class="category-description">
+                        Farm data processing, yield prediction models, weather integration, and agricultural analytics dashboards.
+                    </p>
+                    <div class="category-tags">
+                        <span class="tag">Analytics</span>
+                        <span class="tag">Prediction</span>
+                        <span class="tag">Weather</span>
+                        <span class="tag">Yield</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-icon">🛡️</div>
+                        <div class="category-info">
+                            <h3>Safety & Security</h3>
+                            <div class="category-count">89 packages</div>
+                        </div>
+                    </div>
+                    <p class="category-description">
+                        Emergency stop systems, collision avoidance, secure communication protocols, and safety monitoring tools.
+                    </p>
+                    <div class="category-tags">
+                        <span class="tag">E-Stop</span>
+                        <span class="tag">Collision</span>
+                        <span class="tag">Security</span>
+                        <span class="tag">Monitoring</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Packages -->
+        <div class="featured-section">
+            <div class="section-header">
+                <h2 class="section-title">✨ Featured This Month</h2>
+                <a href="#" class="btn">View All</a>
+            </div>
+            <div class="featured-grid">
+                <div class="item-card">
+                    <div class="item-image">
+                        🍓
+                        <div class="item-badge">FEATURED</div>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div>
+                                <div class="item-title">StrawberryVision Pro</div>
+                                <div class="item-author">by AgriTech Labs</div>
+                            </div>
+                            <div class="item-price">$49.99</div>
+                        </div>
+                        <p class="item-description">
+                            Advanced YOLO-based model for strawberry detection with 98.7% accuracy. Includes ripeness classification and size estimation.
+                        </p>
+                        <div class="item-meta">
+                            <div class="item-stats">
+                                <div class="stat">⭐ 4.9</div>
+                                <div class="stat">📥 12.3K</div>
+                                <div class="stat">🔄 v2.1.5</div>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-primary btn-small">Install</button>
+                            <button class="btn btn-small">Demo</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-image">
+                        🤖
+                        <div class="item-badge">NEW</div>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div>
+                                <div class="item-title">Precision Harvester Template</div>
+                                <div class="item-author">by RobotFarm Solutions</div>
+                            </div>
+                            <div class="item-price free">FREE</div>
+                        </div>
+                        <p class="item-description">
+                            Complete ROS2 template for strawberry harvesting robots. Includes navigation, manipulation, and vision integration.
+                        </p>
+                        <div class="item-meta">
+                            <div class="item-stats">
+                                <div class="stat">⭐ 4.7</div>
+                                <div class="stat">📥 8.9K</div>
+                                <div class="stat">🔄 v1.3.2</div>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-primary btn-small">Install</button>
+                            <button class="btn btn-small">Fork</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-image">
+                        📊
+                        <div class="item-badge">TRENDING</div>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div>
+                                <div class="item-title">FarmAnalytics Suite</div>
+                                <div class="item-author">by DataHarvest Inc</div>
+                            </div>
+                            <div class="item-price">$19.99/mo</div>
+                        </div>
+                        <p class="item-description">
+                            Comprehensive analytics dashboard for farm data visualization, yield prediction, and ROI optimization.
+                        </p>
+                        <div class="item-meta">
+                            <div class="item-stats">
+                                <div class="stat">⭐ 4.8</div>
+                                <div class="stat">📥 15.2K</div>
+                                <div class="stat">🔄 v3.0.1</div>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-primary btn-small">Try Free</button>
+                            <button class="btn btn-small">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popular This Week -->
+        <div class="popular-section">
+            <div class="section-header">
+                <h2 class="section-title">🔥 Popular This Week</h2>
+                <a href="#" class="btn">View Rankings</a>
+            </div>
+            <div class="popular-list">
+                <div class="popular-item">
+                    <div class="popular-rank">1</div>
+                    <div class="popular-icon">🧠</div>
+                    <div class="popular-info">
+                        <div class="popular-title">OpenCV Agriculture Pack</div>
+                        <div class="popular-meta">Computer Vision • Free • by OpenAg Community</div>
+                    </div>
+                    <div class="popular-stats">
+                        <div>📥 2.3K downloads</div>
+                        <div>⭐ 4.9 rating</div>
+                        <div>🔥 +127% this week</div>
+                    </div>
+                </div>
+
+                <div class="popular-item">
+                    <div class="popular-rank">2</div>
+                    <div class="popular-icon">🚀</div>
+                    <div class="popular-info">
+                        <div class="popular-title">Fast Deployment Toolkit</div>
+                        <div class="popular-meta">DevOps • $12.99 • by CloudFarm Technologies</div>
+                    </div>
+                    <div class="popular-stats">
+                        <div>📥 1.8K downloads</div>
+                        <div>⭐ 4.6 rating</div>
+                        <div>🔥 +89% this week</div>
+                    </div>
+                </div>
+
+                <div class="popular-item">
+                    <div class="popular-rank">3</div>
+                    <div class="popular-icon">🌱</div>
+                    <div class="popular-info">
+                        <div class="popular-title">Soil Health Monitoring</div>
+                        <div class="popular-meta">Sensors • Free • by EcoRobotics Lab</div>
+                    </div>
+                    <div class="popular-stats">
+                        <div>📥 1.5K downloads</div>
+                        <div>⭐ 4.8 rating</div>
+                        <div>🔥 +76% this week</div>
+                    </div>
+                </div>
+
+                <div class="popular-item">
+                    <div class="popular-rank">4</div>
+                    <div class="popular-icon">⚡</div>
+                    <div class="popular-info">
+                        <div class="popular-title">ROS2 Performance Optimizer</div>
+                        <div class="popular-meta">Optimization • $24.99 • by Performance Robotics</div>
+                    </div>
+                    <div class="popular-stats">
+                        <div>📥 1.2K downloads</div>
+                        <div>⭐ 4.7 rating</div>
+                        <div>🔥 +65% this week</div>
+                    </div>
+                </div>
+
+                <div class="popular-item">
+                    <div class="popular-rank">5</div>
+                    <div class="popular-icon">🛡️</div>
+                    <div class="popular-info">
+                        <div class="popular-title">Safety Protocol Framework</div>
+                        <div class="popular-meta">Safety • Free • by SafeAg Initiative</div>
+                    </div>
+                    <div class="popular-stats">
+                        <div>📥 987 downloads</div>
+                        <div>⭐ 4.9 rating</div>
+                        <div>🔥 +43% this week</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to category cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 8px 32px rgba(255, 184, 0, 0.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = 'none';
+                });
+            });
+
+            // Simulate real-time download counter updates
+            function updateDownloadStats() {
+                const downloadElements = document.querySelectorAll('.popular-stats div:first-child');
+                downloadElements.forEach(element => {
+                    const text = element.textContent;
+                    const match = text.match(/📥 ([\d.]+)([K|M]?) downloads/);
+                    if (match && Math.random() > 0.8) {
+                        let number = parseFloat(match[1]);
+                        const suffix = match[2] || '';
+                        number += Math.random() * 0.1;
+                        element.textContent = `📥 ${number.toFixed(1)}${suffix} downloads`;
+                    }
+                });
+            }
+
+            // Update stats every 10 seconds
+            setInterval(updateDownloadStats, 10000);
+
+            // Add search functionality
+            const searchInput = document.querySelector('.search-input');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const query = this.value.trim();
+                
+                if (query.length > 0) {
+                    this.style.borderColor = 'var(--primary-400)';
+                    
+                    // Simulate search (in real app, this would call API)
+                    searchTimeout = setTimeout(() => {
+                        console.log('Searching for:', query);
+                        // Would typically filter/update results here
+                    }, 300);
+                } else {
+                    this.style.borderColor = 'var(--bg-quaternary)';
+                }
+            });
+
+            // Add install button functionality
+            document.querySelectorAll('.btn-primary').forEach(button => {
+                if (button.textContent.includes('Install') || button.textContent.includes('Try Free')) {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const originalText = this.textContent;
+                        this.textContent = '⏳ Installing...';
+                        this.disabled = true;
+                        
+                        setTimeout(() => {
+                            this.textContent = '✅ Installed';
+                            this.style.background = 'var(--success)';
+                            
+                            setTimeout(() => {
+                                this.textContent = originalText;
+                                this.disabled = false;
+                                this.style.background = '';
+                            }, 2000);
+                        }, 2000);
+                    });
+                }
+            });
+
+            // Animate cards on page load
+            const cards = document.querySelectorAll('.category-card, .item-card, .popular-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIAHUB.DEV 디자인 시스템 - 01. 컬러 & 타이포그래피</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Theme Colors */
+            --bg-primary: #0D1117;
+            --bg-secondary: #161B22;
+            --bg-tertiary: #21262D;
+            --bg-quaternary: #30363D;
+            
+            /* Text Colors */
+            --text-primary: #F0F6FC;
+            --text-secondary: #7D8590;
+            --text-tertiary: #484F58;
+            
+            /* Brand Colors - Agricultural tech inspired */
+            --primary-400: #FFB800;
+            --primary-500: #FF8F00;
+            --primary-600: #E65100;
+            --accent-400: #00BCD4;
+            --accent-500: #0097A7;
+            
+            /* Status Colors */
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+            --info: #2196F3;
+            
+            /* Fonts */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+        }
+
+        .design-system-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100vh;
+            gap: 0;
+        }
+
+        /* Left Panel - Colors */
+        .left-panel {
+            background: var(--bg-secondary);
+            padding: 48px;
+            border-right: 1px solid var(--bg-tertiary);
+            overflow-y: auto;
+        }
+
+        /* Right Panel - Typography */
+        .right-panel {
+            background: var(--bg-primary);
+            padding: 48px;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, var(--primary-400), var(--accent-400));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subsection-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 32px 0 16px 0;
+            color: var(--text-primary);
+        }
+
+        /* Color Palette */
+        .color-section {
+            margin-bottom: 32px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .color-card {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--bg-quaternary);
+        }
+
+        .color-swatch {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .color-info {
+            font-size: 14px;
+        }
+
+        .color-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .color-hex {
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .color-usage {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* Brand Colors */
+        .primary-400 { background: var(--primary-400); }
+        .primary-500 { background: var(--primary-500); }
+        .primary-600 { background: var(--primary-600); }
+        .accent-400 { background: var(--accent-400); }
+        .accent-500 { background: var(--accent-500); }
+
+        /* Background Colors */
+        .bg-primary { background: var(--bg-primary); }
+        .bg-secondary { background: var(--bg-secondary); }
+        .bg-tertiary { background: var(--bg-tertiary); }
+        .bg-quaternary { background: var(--bg-quaternary); }
+
+        /* Text Colors */
+        .text-primary { background: var(--text-primary); }
+        .text-secondary { background: var(--text-secondary); }
+        .text-tertiary { background: var(--text-tertiary); }
+
+        /* Status Colors */
+        .success { background: var(--success); }
+        .warning { background: var(--warning); }
+        .error { background: var(--error); }
+        .info { background: var(--info); }
+
+        /* Typography */
+        .typography-sample {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .font-display {
+            margin-bottom: 8px;
+        }
+
+        .font-specs {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        /* Heading Styles */
+        .h1-sample { font-size: 48px; font-weight: 700; line-height: 1.2; }
+        .h2-sample { font-size: 36px; font-weight: 600; line-height: 1.3; }
+        .h3-sample { font-size: 28px; font-weight: 600; line-height: 1.4; }
+        .h4-sample { font-size: 24px; font-weight: 600; line-height: 1.4; }
+        .h5-sample { font-size: 20px; font-weight: 600; line-height: 1.5; }
+        .h6-sample { font-size: 16px; font-weight: 600; line-height: 1.5; }
+
+        /* Body Text Styles */
+        .body-large { font-size: 18px; font-weight: 400; line-height: 1.6; }
+        .body-regular { font-size: 16px; font-weight: 400; line-height: 1.6; }
+        .body-small { font-size: 14px; font-weight: 400; line-height: 1.6; }
+        .caption { font-size: 12px; font-weight: 400; line-height: 1.5; }
+
+        /* Code Text */
+        .code-sample {
+            font-family: var(--font-mono);
+            background: var(--bg-quaternary);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--primary-400);
+            margin: 8px 0;
+        }
+
+        /* Logo Display */
+        .logo-section {
+            margin-bottom: 32px;
+            text-align: center;
+            padding: 32px;
+            background: var(--bg-tertiary);
+            border-radius: 16px;
+        }
+
+        .main-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .tagline {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Gradient Examples */
+        .gradient-section {
+            margin-top: 24px;
+        }
+
+        .gradient-samples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .gradient-sample {
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+        }
+
+        .gradient-accent {
+            background: linear-gradient(135deg, var(--accent-400), var(--accent-500));
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-400), var(--accent-400));
+        }
+
+        .gradient-dark {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-quaternary));
+        }
+
+        /* Page indicator */
+        .page-indicator {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-tertiary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border: 1px solid var(--bg-quaternary);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-quaternary);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="design-system-container">
+        <!-- Left Panel: Color System -->
+        <div class="left-panel">
+            <h1 class="section-title">🎨 Color System</h1>
+            
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <div class="main-logo">
+                    <div class="logo-icon">🚜</div>
+                    <span>VIAHUB.DEV</span>
+                </div>
+                <div class="tagline">농업 로봇 개발 플랫폼</div>
+            </div>
+
+            <!-- Brand Colors -->
+            <div class="color-section">
+                <h3 class="subsection-title">🌟 Brand Colors</h3>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-swatch primary-400"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary 400</div>
+                            <div class="color-hex">#FFB800</div>
+                            <div class="color-usage">주요 액션, 브랜드 강조</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch primary-500"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary 500</div>
+                            <div class="color-hex">#FF8F00</div>
+                            <div class="color-usage">버튼, 링크, 하이라이트</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch primary-600"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary 600</div>
+                            <div class="color-hex">#E65100</div>
+                            <div class="color-usage">호버 상태, 액티브</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch accent-400"></div>
+                        <div class="color-info">
+                            <div class="color-name">Accent 400</div>
+                            <div class="color-hex">#00BCD4</div>
+                            <div class="color-usage">보조 액션, 정보 강조</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch accent-500"></div>
+                        <div class="color-info">
+                            <div class="color-name">Accent 500</div>
+                            <div class="color-hex">#0097A7</div>
+                            <div class="color-usage">보조 버튼, 링크</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Colors -->
+            <div class="color-section">
+                <h3 class="subsection-title">🖤 Background Colors</h3>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-swatch bg-primary"></div>
+                        <div class="color-info">
+                            <div class="color-name">BG Primary</div>
+                            <div class="color-hex">#0D1117</div>
+                            <div class="color-usage">페이지 배경</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch bg-secondary"></div>
+                        <div class="color-info">
+                            <div class="color-name">BG Secondary</div>
+                            <div class="color-hex">#161B22</div>
+                            <div class="color-usage">헤더, 사이드바</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch bg-tertiary"></div>
+                        <div class="color-info">
+                            <div class="color-name">BG Tertiary</div>
+                            <div class="color-hex">#21262D</div>
+                            <div class="color-usage">카드, 모달</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch bg-quaternary"></div>
+                        <div class="color-info">
+                            <div class="color-name">BG Quaternary</div>
+                            <div class="color-hex">#30363D</div>
+                            <div class="color-usage">입력 필드, 버튼</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Colors -->
+            <div class="color-section">
+                <h3 class="subsection-title">🚨 Status Colors</h3>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-swatch success"></div>
+                        <div class="color-info">
+                            <div class="color-name">Success</div>
+                            <div class="color-hex">#4CAF50</div>
+                            <div class="color-usage">성공, 온라인 상태</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch warning"></div>
+                        <div class="color-info">
+                            <div class="color-name">Warning</div>
+                            <div class="color-hex">#FF9800</div>
+                            <div class="color-usage">경고, 주의 상태</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch error"></div>
+                        <div class="color-info">
+                            <div class="color-name">Error</div>
+                            <div class="color-hex">#F44336</div>
+                            <div class="color-usage">오류, 위험 상태</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch info"></div>
+                        <div class="color-info">
+                            <div class="color-name">Info</div>
+                            <div class="color-hex">#2196F3</div>
+                            <div class="color-usage">정보, 진행 상태</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gradient Examples -->
+            <div class="gradient-section">
+                <h3 class="subsection-title">🌈 Gradients</h3>
+                <div class="gradient-samples">
+                    <div class="gradient-sample gradient-primary">Primary Gradient</div>
+                    <div class="gradient-sample gradient-accent">Accent Gradient</div>
+                    <div class="gradient-sample gradient-text">Text Gradient</div>
+                    <div class="gradient-sample gradient-dark">Dark Gradient</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Typography -->
+        <div class="right-panel">
+            <h1 class="section-title">📝 Typography</h1>
+
+            <!-- Font Information -->
+            <div class="typography-sample">
+                <div class="subsection-title">🔤 Font Family</div>
+                <div style="font-family: var(--font-sans); font-size: 18px; margin-bottom: 8px;">
+                    Inter - Primary Font (Sans-serif)
+                </div>
+                <div style="font-family: var(--font-mono); font-size: 16px; color: var(--primary-400);">
+                    JetBrains Mono - Code Font (Monospace)
+                </div>
+                <div class="font-specs">
+                    Inter: 300, 400, 500, 600, 700, 800, 900<br>
+                    JetBrains Mono: 300, 400, 500, 600, 700
+                </div>
+            </div>
+
+            <!-- Headings -->
+            <div class="typography-sample">
+                <div class="subsection-title">📰 Headings</div>
+                
+                <div class="font-display h1-sample">Heading 1 - Hero Titles</div>
+                <div class="font-specs">48px / 700 / line-height: 1.2</div>
+                
+                <div class="font-display h2-sample">Heading 2 - Page Titles</div>
+                <div class="font-specs">36px / 600 / line-height: 1.3</div>
+                
+                <div class="font-display h3-sample">Heading 3 - Section Titles</div>
+                <div class="font-specs">28px / 600 / line-height: 1.4</div>
+                
+                <div class="font-display h4-sample">Heading 4 - Subsection</div>
+                <div class="font-specs">24px / 600 / line-height: 1.4</div>
+                
+                <div class="font-display h5-sample">Heading 5 - Card Titles</div>
+                <div class="font-specs">20px / 600 / line-height: 1.5</div>
+                
+                <div class="font-display h6-sample">Heading 6 - Small Headers</div>
+                <div class="font-specs">16px / 600 / line-height: 1.5</div>
+            </div>
+
+            <!-- Body Text -->
+            <div class="typography-sample">
+                <div class="subsection-title">📄 Body Text</div>
+                
+                <div class="font-display body-large">
+                    Body Large - VIAHUB.DEV는 농업 로봇 개발을 위한 혁신적인 클라우드 플랫폼입니다.
+                </div>
+                <div class="font-specs">18px / 400 / line-height: 1.6</div>
+                
+                <div class="font-display body-regular">
+                    Body Regular - 적과적심 로봇부터 다양한 농업 자동화 솔루션까지 완전한 SDK를 제공합니다.
+                </div>
+                <div class="font-specs">16px / 400 / line-height: 1.6</div>
+                
+                <div class="font-display body-small">
+                    Body Small - 개발자 친화적인 GitHub 스타일 인터페이스로 쉽고 빠른 개발이 가능합니다.
+                </div>
+                <div class="font-specs">14px / 400 / line-height: 1.6</div>
+                
+                <div class="font-display caption">
+                    Caption - 추가 정보나 메타데이터를 표시하는데 사용됩니다.
+                </div>
+                <div class="font-specs">12px / 400 / line-height: 1.5</div>
+            </div>
+
+            <!-- Code Text -->
+            <div class="typography-sample">
+                <div class="subsection-title">💻 Code & Technical</div>
+                
+                <div class="code-sample">
+                    git clone https://github.com/viahub/strawberry-thinning-robot.git
+                </div>
+                <div class="font-specs">JetBrains Mono / 14px / 400</div>
+                
+                <div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); margin: 8px 0;">
+                    VIAHUB-UI-LANDING001 • v2.1.3 • 847 downloads
+                </div>
+                <div class="font-specs">Identifiers & Metadata</div>
+            </div>
+
+            <!-- Text Hierarchy -->
+            <div class="typography-sample">
+                <div class="subsection-title">🏗️ Text Hierarchy</div>
+                
+                <div style="color: var(--text-primary); margin-bottom: 4px;">Primary Text</div>
+                <div class="font-specs">#F0F6FC - 주요 콘텐츠, 제목</div>
+                
+                <div style="color: var(--text-secondary); margin-bottom: 4px;">Secondary Text</div>
+                <div class="font-specs">#7D8590 - 설명, 메타데이터</div>
+                
+                <div style="color: var(--text-tertiary); margin-bottom: 4px;">Tertiary Text</div>
+                <div class="font-specs">#484F58 - 비활성화, 플레이스홀더</div>
+            </div>
+
+            <!-- Special Text Effects -->
+            <div class="typography-sample">
+                <div class="subsection-title">✨ Special Effects</div>
+                
+                <div style="background: linear-gradient(135deg, var(--primary-400), var(--accent-400)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 24px; font-weight: 700; margin-bottom: 8px;">
+                    Gradient Text for Emphasis
+                </div>
+                <div class="font-specs">Brand gradient for hero text</div>
+                
+                <div style="color: var(--primary-400); font-weight: 600; margin-bottom: 8px;">
+                    Highlighted Important Text
+                </div>
+                <div class="font-specs">Primary color for emphasis</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-indicator">
+        페이지 1/4 - Color System & Typography
+    </div>
+</body>
+</html>

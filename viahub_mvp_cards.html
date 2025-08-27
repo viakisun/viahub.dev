@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIAHUB.DEV MVP 페이지 카드 설명</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Theme Colors */
+            --bg-primary: #0D1117;
+            --bg-secondary: #161B22;
+            --bg-tertiary: #21262D;
+            --bg-quaternary: #30363D;
+            
+            /* Text Colors */
+            --text-primary: #F0F6FC;
+            --text-secondary: #7D8590;
+            --text-tertiary: #484F58;
+            
+            /* Brand Colors - Agricultural tech inspired */
+            --primary-400: #FFB800;
+            --primary-500: #FF8F00;
+            --primary-600: #E65100;
+            --accent-400: #00BCD4;
+            --accent-500: #0097A7;
+            
+            /* Status Colors */
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+            --info: #2196F3;
+            
+            /* Fonts */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary-400), var(--accent-400));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-400);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .completion-bar {
+            width: 200px;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            margin: 24px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .completion-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--success), var(--primary-400));
+            border-radius: 4px;
+            animation: fillProgress 2s ease-in-out;
+        }
+
+        @keyframes fillProgress {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .page-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .page-card:hover {
+            border-color: var(--primary-500);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(255, 184, 0, 0.15);
+        }
+
+        .page-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-400), var(--accent-400));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .page-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: var(--bg-tertiary);
+            position: relative;
+        }
+
+        .card-icon::after {
+            content: '✅';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            font-size: 16px;
+            background: var(--success);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-id {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .card-category {
+            font-size: 14px;
+            color: var(--accent-400);
+            font-weight: 500;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-features {
+            margin-bottom: 20px;
+        }
+
+        .features-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .feature-item {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-bullet {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--primary-400);
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag.primary {
+            background: rgba(255, 184, 0, 0.1);
+            color: var(--primary-400);
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        .card-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .card-complexity {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 36px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        /* Animation on scroll */
+        .page-card {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .page-card:nth-child(1) { animation-delay: 0.1s; }
+        .page-card:nth-child(2) { animation-delay: 0.2s; }
+        .page-card:nth-child(3) { animation-delay: 0.3s; }
+        .page-card:nth-child(4) { animation-delay: 0.4s; }
+        .page-card:nth-child(5) { animation-delay: 0.5s; }
+        .page-card:nth-child(6) { animation-delay: 0.6s; }
+        .page-card:nth-child(7) { animation-delay: 0.7s; }
+        .page-card:nth-child(8) { animation-delay: 0.8s; }
+        .page-card:nth-child(9) { animation-delay: 0.9s; }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">🚜 VIAHUB.DEV MVP</h1>
+            <p class="subtitle">농업 로봇 개발을 위한 완전한 클라우드 플랫폼</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">9</span>
+                    <span class="stat-label">MVP 페이지</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">완성도</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">188</span>
+                    <span class="stat-label">총 설계 페이지</span>
+                </div>
+            </div>
+            
+            <div class="completion-bar">
+                <div class="completion-fill"></div>
+            </div>
+            
+            <p style="color: var(--success); font-weight: 600; font-size: 14px;">✅ MVP 개발 완료</p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <!-- VIAHUB-UI-LANDING001 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">🌟</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-LANDING001</div>
+                        <div class="card-title">메인 랜딩 페이지</div>
+                        <div class="card-category">Landing & Marketing</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    VIAHUB.DEV의 첫인상을 결정하는 메인 랜딩 페이지입니다. 적과적심 로봇 SDK와 농업 로봇 개발 플랫폼의 핵심 가치를 전달하며, GitHub for Robotics 컨셉으로 개발자들을 유치합니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>Hero Section: 농업 로봇 SDK 플랫폼 소개</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>Live Terminal Demo: 실제 배포 과정 시뮬레이션</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>Feature Highlights: 6개 핵심 차별화 기능</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>Developer Testimonials: 실제 개발자 후기</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>통계 섹션: 15K+ 프로젝트, 98.7% 성공률</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">Hero Page</span>
+                    <span class="tag">Marketing</span>
+                    <span class="tag">농업 로봇</span>
+                    <span class="tag">SDK</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 중간</div>
+                </div>
+            </div>
+
+            <!-- VIAHUB-UI-AUTH002 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">📝</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-AUTH002</div>
+                        <div class="card-title">회원가입 페이지</div>
+                        <div class="card-category">Authentication</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    농업 로봇 개발자를 위한 특화된 회원가입 페이지입니다. GitHub OAuth 연동과 농업 로봇 타입 선택을 통해 개발자 친화적인 온보딩 경험을 제공합니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>GitHub OAuth 통합: 간편한 개발자 가입</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>로봇 타입 선택: 적과/수확/모니터링/제초 등 8개</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>실시간 폼 검증: 즉시 피드백 제공</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>농업 회사 정보: 직급, 팀 규모 등</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>가치 제안: 6가지 핵심 혜택 미리보기</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">Onboarding</span>
+                    <span class="tag">GitHub OAuth</span>
+                    <span class="tag">농업 특화</span>
+                    <span class="tag">개발자</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 중간</div>
+                </div>
+            </div>
+
+            <!-- VIAHUB-UI-DASHBOARD001 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">🏠</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-DASHBOARD001</div>
+                        <div class="card-title">메인 대시보드</div>
+                        <div class="card-category">Dashboard & Home</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    농업 로봇 개발자가 매일 사용하는 메인 허브입니다. 프로젝트 상태, 활동 피드, 로봇 현황을 한눈에 볼 수 있으며 GitHub 스타일의 친숙한 인터페이스를 제공합니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>프로젝트 개요: 최근 저장소와 활동 상태</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>활동 피드: 커밋, 배포, 이슈 등 실시간 업데이트</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>로봇 현황 위젯: 플릿 상태 요약 표시</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>퀵 액션: 자주 사용하는 기능 원클릭 접근</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>알림 센터: 중요 이벤트 및 경고 표시</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">Main Hub</span>
+                    <span class="tag">GitHub Style</span>
+                    <span class="tag">Activity Feed</span>
+                    <span class="tag">농업 프로젝트</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 중간</div>
+                </div>
+            </div>
+
+            <!-- VIAHUB-UI-REPO003 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">📁</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-REPO003</div>
+                        <div class="card-title">저장소 메인 페이지</div>
+                        <div class="card-category">Repository Management</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    GitHub Repository와 동일한 UX로 농업 로봇 코드를 관리하는 페이지입니다. strawberry-thinning-robot 프로젝트를 예시로 ROS2 패키지와 AI 모델을 통합 관리합니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>파일 트리: ROS2 패키지 구조 탐색</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>README 렌더링: 프로젝트 문서 표시</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>커밋 히스토리: 최근 개발 활동 추적</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>언어 통계: Python, C++, YAML 구성비</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>클론/다운로드: 개발자 친화적 접근</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">Code Management</span>
+                    <span class="tag">ROS2</span>
+                    <span class="tag">GitHub Style</span>
+                    <span class="tag">딸기 로봇</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 높음</div>
+                </div>
+            </div>
+
+            <!-- VIAHUB-UI-DEPLOY001 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">🚀</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-DEPLOY001</div>
+                        <div class="card-title">배포 개요 페이지</div>
+                        <div class="card-category">Deployment Management</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    VIAHUB.DEV의 가장 혁신적인 기능입니다. 코드에서 실제 딸기 농장 로봇까지의 배포 과정을 완전히 시각화하며, Vercel처럼 직관적인 배포 경험을 제공합니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>농장 배포 시각화: Production/Staging 환경</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>실시간 배포 모니터링: 진행률 + 로그</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>로봇 플릿 상태: 5대 로봇 개별 관리</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>농업 메트릭: 과일 처리량, 감지 정확도</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>배포 히스토리: 성공/실패 기록 관리</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">핵심 차별화</span>
+                    <span class="tag">농장 배포</span>
+                    <span class="tag">실시간</span>
+                    <span class="tag">Vercel Style</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 최고</div>
+                </div>
+            </div>
+
+            <!-- VIAHUB-UI-ROBOT001 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">🤖</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-ROBOT001</div>
+                        <div class="card-title">로봇 플릿 관리</div>
+                        <div class="card-category">Robot Management</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    실제 딸기 농장의 로봇들을 관리하는 특화 페이지입니다. 혁신적인 2-View 시스템(맵뷰↔리스트뷰)으로 15개 구역의 딸기 농장과 5대 로봇을 실시간으로 모니터링합니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>2-View 시스템: 맵뷰 ↔ 리스트뷰 전환</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>농장 시뮬레이션: Strawberry Farm Alpha</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>5대 로봇 관리: Harvester/Monitor/Navigator</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>실시간 상태: 배터리, 작업, 위치 추적</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>긴급 제어: 즉시 정지, 충전소 복귀</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">로봇 특화</span>
+                    <span class="tag">실시간 맵</span>
+                    <span class="tag">플릿 관리</span>
+                    <span class="tag">딸기 농장</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 최고</div>
+                </div>
+            </div>
+
+            <!-- VIAHUB-UI-ACTIONS001 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">🔧</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-ACTIONS001</div>
+                        <div class="card-title">CI/CD 워크플로우</div>
+                        <div class="card-category">Automation Pipeline</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    GitHub Actions 스타일의 농업 로봇 특화 CI/CD 플랫폼입니다. ROS2 빌드부터 실제 농장 로봇 배포까지 완전 자동화된 워크플로우를 제공합니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>4가지 워크플로우: 빌드/배포/AI훈련/테스트</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>실시간 모니터링: 성공률, 실행 시간 통계</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>농업 특화 파이프라인: 농장 배포, Gazebo 테스트</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>실행 히스토리: 상세 로그 및 결과 추적</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>라이브 업데이트: 실행 중 시간 실시간 증가</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">자동화</span>
+                    <span class="tag">GitHub Actions</span>
+                    <span class="tag">ROS2</span>
+                    <span class="tag">AI 훈련</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 높음</div>
+                </div>
+            </div>
+
+            <!-- VIAHUB-UI-MOBILE001 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">📱</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-MOBILE001</div>
+                        <div class="card-title">모바일 앱</div>
+                        <div class="card-category">Mobile Application</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    농장 현장에서 사용하는 네이티브 모바일 앱입니다. 네트워크가 불안정한 환경에서도 로봇 긴급 제어와 핵심 모니터링이 가능하도록 설계되었습니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>실시간 농장 대시보드: 핵심 지표 4개 위젯</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>개별 로봇 제어: 원격 조작, 배터리 모니터링</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>긴급 정지 버튼: 모든 로봇 즉시 정지</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>빠른 액션: 배포, 맵, 설정 원터치 접근</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>오프라인 대응: 네트워크 불안정 환경 고려</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">현장 전용</span>
+                    <span class="tag">iOS Style</span>
+                    <span class="tag">긴급 제어</span>
+                    <span class="tag">오프라인</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 중간</div>
+                </div>
+            </div>
+
+            <!-- VIAHUB-UI-MARKET001 -->
+            <div class="page-card">
+                <div class="card-header">
+                    <div class="card-icon">🛒</div>
+                    <div class="card-info">
+                        <div class="card-id">VIAHUB-UI-MARKET001</div>
+                        <div class="card-title">마켓플레이스</div>
+                        <div class="card-category">Ecosystem Platform</div>
+                    </div>
+                </div>
+                
+                <p class="card-description">
+                    농업 로봇 소프트웨어의 앱스토어입니다. AI 모델, ROS2 패키지, 로봇 템플릿을 거래하는 생태계 플랫폼으로, 전 세계 농업 로봇 개발자들이 참여하는 오픈 마켓입니다.
+                </p>
+                
+                <div class="card-features">
+                    <div class="features-title">🎯 핵심 기능</div>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>6개 전문 카테고리: AI/ROS2/템플릿/도구/데이터/보안</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>Featured 패키지: StrawberryVision Pro 등</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>실시간 인기 순위: 주간 TOP 5 + 성장률</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>통합 검색: AI 모델, 패키지 통합 검색</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <span>개발자 생태계: 퍼블리싱, 리뷰, 결제</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-tags">
+                    <span class="tag primary">생태계</span>
+                    <span class="tag">앱스토어</span>
+                    <span class="tag">AI 모델</span>
+                    <span class="tag">커뮤니티</span>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-status">
+                        <div class="status-dot"></div>
+                        <span>완성</span>
+                    </div>
+                    <div class="card-complexity">복잡도: 높음</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add interactive hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.page-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 16px 48px rgba(255, 184, 0, 0.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '';
+                });
+                
+                // Add click effect
+                card.addEventListener('click', function() {
+                    const cardId = this.querySelector('.card-id').textContent;
+                    console.log('Clicked:', cardId);
+                    // Here you could add navigation to the actual page
+                });
+            });
+        });
+    </script>
+</body>
+</html>
