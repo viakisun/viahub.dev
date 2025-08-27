@@ -12,33 +12,32 @@ describe('IndexPage', () => {
   });
 
   test('renders the Stats and Terminal sections', () => {
-    // Check for a heading from the Stats section
     const statsHeading = screen.getByText(/trusted by 500\+/i);
     expect(statsHeading).toBeInTheDocument();
 
-    // Check for some text from the Terminal demo
     const terminalText = screen.getByText(/agricultural-robot-deploy/i);
     expect(terminalText).toBeInTheDocument();
   });
 
-  test('renders the three card sections', () => {
-    const coreHeading = screen.getByRole('heading', { name: /core/i });
+  test('renders the three card section titles', () => {
+    const coreHeading = screen.getByRole('heading', { name: 'Core' });
     expect(coreHeading).toBeInTheDocument();
 
-    const advancedHeading = screen.getByRole('heading', { name: /advanced/i });
+    const advancedHeading = screen.getByRole('heading', { name: 'Advanced' });
     expect(advancedHeading).toBeInTheDocument();
 
-    const managementHeading = screen.getByRole('heading', { name: /management/i });
+    const managementHeading = screen.getByRole('heading', { name: 'Management' });
     expect(managementHeading).toBeInTheDocument();
   });
 
-  test('renders a total of 12 page cards with icons and correct hrefs', () => {
+  test('renders a total of 12 page cards', () => {
     const pageCards = screen.getAllByTestId(/^card-/);
     expect(pageCards).toHaveLength(12);
 
+    // Check one card's content and href
     const dashboardCard = screen.getByTestId('card-dashboard');
-    const icon = screen.getByText('📊');
-    expect(dashboardCard).toContainElement(icon);
     expect(dashboardCard).toHaveAttribute('href', '/robotics_ui_dashboard001.html');
+    expect(dashboardCard.querySelector('.feature-icon')?.textContent).toBe('📊');
+    expect(dashboardCard.querySelector('.feature-title')?.textContent).toBe('Dashboard');
   });
 });

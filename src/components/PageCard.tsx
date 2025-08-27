@@ -1,32 +1,28 @@
 import React from 'react';
 
 interface PageCardProps {
-  id: string;
   title: string;
   description: string;
   path: string;
   icon: string;
 }
 
-const PageCard: React.FC<PageCardProps> = ({ id, title, description, path, icon }) => {
+const PageCard: React.FC<PageCardProps> = ({ title, description, path, icon }) => {
   return (
     <a
       href={path}
-      className="group flex flex-col rounded-xl border border-white/10 bg-white/5 p-6 text-white transition-all duration-200 ease-in-out hover:-translate-y-1 hover:border-golden hover:shadow-2xl hover:shadow-golden/20"
+      className="feature-card"
       data-testid={`card-${title.toLowerCase()}`}
+      style={{textDecoration: 'none', display: 'flex', flexDirection: 'column'}}
     >
-      <div className="mb-4 flex items-start justify-between">
-        <div className="flex items-center gap-4">
-          <span className="text-2xl">{icon}</span>
-          <h3 className="text-xl font-bold text-dark-text-primary">{title}</h3>
-        </div>
-        <span className="ml-4 whitespace-nowrap rounded-md bg-white/10 px-2 py-1 font-mono text-xs text-dark-text-secondary">
-          {id}
-        </span>
-      </div>
-      <p className="mb-6 flex-grow text-sm text-dark-text-secondary">{description}</p>
-      <div className="mt-auto flex items-center justify-center rounded-lg bg-white/10 py-2 font-semibold text-dark-text-primary transition-colors group-hover:bg-golden group-hover:text-dark-bg-primary">
-        Open <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
+      <div className="feature-icon">{icon}</div>
+      <h3 className="feature-title">{title}</h3>
+      <p className="feature-description" style={{flexGrow: 1}}>{description}</p>
+      <div
+        className="btn btn-secondary"
+        style={{marginTop: 'auto', textAlign: 'center', display: 'block'}}
+      >
+        Open
       </div>
     </a>
   );
